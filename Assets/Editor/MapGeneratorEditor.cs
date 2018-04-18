@@ -7,17 +7,17 @@ using UnityEditor;
 public class MapGeneratorEditor : Editor {
 
     // Creates a generate map button within the editor
-    public override void OnInspectorGUI()    {
+    public override void OnInspectorGUI() {
         MapGenerator mapGen = (MapGenerator)target;
 
         // Auto updates if any value is changed
-        if (DrawDefaultInspector())        {
-            if (mapGen.autoUpdate)            {
+        if (DrawDefaultInspector()) {
+            if (mapGen.autoUpdate) {
                 mapGen.GenerateMap();
             }
         }
 
-        if (GUILayout.Button ("Generate"))        {
+        if (GUILayout.Button ("Generate")) {
             mapGen.GenerateMap();
         }
     }

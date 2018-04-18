@@ -224,10 +224,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 279641c1407ee8e489a5dd4bac064e81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoUpdate: 1
   mapWidth: 100
   mapHeight: 100
-  noiseScale: 0.3
-  autoUpdate: 1
+  seed: 1
+  noiseScale: 25
+  octaves: 4
+  persistance: 0.5
+  lacunarity: 2
+  offset: {x: 1, y: 1}
 --- !u!4 &1649928325
 Transform:
   m_ObjectHideFlags: 0
