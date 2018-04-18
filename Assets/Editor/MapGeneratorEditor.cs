@@ -17,6 +17,7 @@ public class MapGeneratorEditor : Editor {
             }
         }
 
+        // Add editor button
         if (GUILayout.Button ("Generate")) {
             mapGen.GenerateMap();
         }

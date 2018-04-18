@@ -57,7 +57,8 @@ public static class Noise {
                     minNoiseHeight = noiseHeight;
                 }
 
-                noiseMap[x, y] = noiseHeight;                       // Apply noiseHeight to noiseMap
+                // Apply noiseHeight to noiseMap
+                noiseMap[x, y] = noiseHeight;
             }
         }
 
