@@ -9,13 +9,13 @@ public class MapGenerator : MonoBehaviour {
 
     public bool autoUpdate;
 
-    const int mapChunkSize = 241;
-    [Range(0,6)]                        // Sets levelOfDetail to slider
-    public int levelOfDetail;           // 1, 2, 4, 8, 12, 24
+    public const int mapChunkSize = 241;    // Mesh 240x240
+    [Range(0,6)]                            // Sets levelOfDetail to slider
+    public int levelOfDetail;               // 1, 2, 4, 8, 12, 24
     public float noiseScale;
 
     public int octaves;
-    [Range(0,1)]                        // Sets persistance to slider
+    [Range(0,1)]                            // Sets persistance to slider
     public float persistance;
     public float lacunarity;
 
