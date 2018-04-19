@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour {
 
-    public enum DrawMode { NoiseMap, ColorMap};
+    public enum DrawMode { NoiseMap, ColorMap, DrawMesh};
     public DrawMode drawMode;
 
     public bool autoUpdate;
@@ -48,6 +48,11 @@ public class MapGenerator : MonoBehaviour {
         else if (drawMode == DrawMode.ColorMap) {
             display.DrawTexture(TextureGenerator.TextureFromColorMap(colorMap, mapWidth, mapHeight));
         }
+        else if (drawMode == DrawMode.DrawMesh)
+        {
+            display.DrawMesh(MeshGenerator.GenerateTerrainMesh(noiseMap), TextureGenerator.TextureFromColorMap(colorMap, mapWidth, mapHeight));
+        }
+
     }
 
     // Ensures minimum values in editor
