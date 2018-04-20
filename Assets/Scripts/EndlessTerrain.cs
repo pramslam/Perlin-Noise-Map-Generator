@@ -25,6 +25,7 @@ public class EndlessTerrain : MonoBehaviour {
     Dictionary<Vector2, TerrainChunk> terrainChunkDictionary = new Dictionary<Vector2, TerrainChunk>();
     static List<TerrainChunk> terrainChunksVisibleLastUpdate = new List<TerrainChunk>();
 
+    // Use this for initialization
     void Start() {
         mapGenerator = FindObjectOfType<MapGenerator>();
 
@@ -35,6 +36,7 @@ public class EndlessTerrain : MonoBehaviour {
         UpdateVisibleChunks();
     }
 
+    // Update is called once per frame
     void Update() {
         viewerPosition = new Vector2(viewer.position.x, viewer.position.z) / scale;
 
