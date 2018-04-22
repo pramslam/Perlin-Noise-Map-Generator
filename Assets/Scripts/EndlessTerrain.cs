@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class EndlessTerrain : MonoBehaviour {
 
-    const float scale = 1.0f;
-
     const float viewerMoveThresholdForChunkUpdate = 25.0f;
     const float sqrViewerMoveThresholdForChunkUpdate = viewerMoveThresholdForChunkUpdate * viewerMoveThresholdForChunkUpdate;
 
@@ -30,7 +28,7 @@ public class EndlessTerrain : MonoBehaviour {
         mapGenerator = FindObjectOfType<MapGenerator>();
 
         maxViewDistance = detailLevels[detailLevels.Length - 1].visibleDistanceThreshold;
-        chunkSize = MapGenerator.mapChunkSize - 1;                                          // maxChunkSize = 241 - 1
+        chunkSize = mapGenerator.mapChunkSize - 1;                                          // maxChunkSize = 241 - 1
         chunksVisibleInViewDistance = Mathf.RoundToInt(maxViewDistance / chunkSize);
 
         UpdateVisibleChunks();
@@ -38,7 +36,7 @@ public class EndlessTerrain : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        viewerPosition = new Vector2(viewer.position.x, viewer.position.z) / scale;
+        viewerPosition = new Vector2(viewer.position.x, viewer.position.z) / mapGenerator.terrainData.uniformScale;
 
         if ((viewerPositionOld - viewerPosition).sqrMagnitude > sqrViewerMoveThresholdForChunkUpdate) {
             viewerPositionOld = viewerPosition;
@@ -107,9 +105,9 @@ public class EndlessTerrain : MonoBehaviour {
             meshCollider = meshObject.AddComponent<MeshCollider>();
             meshRenderer.material = material;
 
-            meshObject.transform.position = positionV3 * scale;
+            meshObject.transform.position = positionV3 * mapGenerator.terrainData.uniformScale;
             meshObject.transform.parent = parent;                                   // Ensures new planes are added to MapGenerator
-            meshObject.transform.localScale = Vector3.one * scale;
+            meshObject.transform.localScale = Vector3.one * mapGenerator.terrainData.uniformScale;
             SetVisible(false);                                                      // Default chunk not visible
 
             lodMeshes = new LODMesh[detailLevels.Length];
@@ -126,9 +124,6 @@ public class EndlessTerrain : MonoBehaviour {
         void OnMapDataReceived(MapData mapData) {
             this.mapData = mapData;
             mapDataReceived = true;
-
-            Texture2D texture = TextureGenerator.TextureFromColorMap(mapData.colorMap, MapGenerator.mapChunkSize, MapGenerator.mapChunkSize);
-            meshRenderer.material.mainTexture = texture;
 
             UpdateTerrainChunk();
         }
