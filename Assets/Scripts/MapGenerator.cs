@@ -15,8 +15,13 @@ public class MapGenerator : MonoBehaviour {
 
     public Material terrainMaterial;
 
-    [Range(0,6)]                            // Sets levelOfDetail to slider
-    public int editorPreviewLOD;            // 0, 1, 2, 4, 8, 12
+    [Range(0, MeshGenerator.numSupportedChunkSizes - 1)]
+    public int chunkSizeIndex;
+    [Range(0, MeshGenerator.numSupportedFlatShadedChunkSizes - 1)]
+    public int flatShadedChunkSizeIndex;
+
+    [Range(0,MeshGenerator.numSupportedLODs - 1)]           // Sets levelOfDetail to slider
+    public int editorPreviewLOD;                            // 0, 1, 2, 4
 
     public bool autoUpdate;
 
@@ -27,6 +32,7 @@ public class MapGenerator : MonoBehaviour {
 
     void Awake() {
         textureData.ApplyToMaterial(terrainMaterial);
+        textureData.UpdateMeshHeights(terrainMaterial, terrainData.minHeight, terrainData.maxHeight);
     }
 
     void OnValuesUpdated() {
@@ -42,17 +48,20 @@ public class MapGenerator : MonoBehaviour {
     public int mapChunkSize {
         get  {
             if (terrainData.useFlatShading) {
-                return 95;
+                return MeshGenerator.supportedFlatShadedChunkSizes[flatShadedChunkSizeIndex] - 1;
             }
             else {
-                return 239;
+                return MeshGenerator.supportedChunkSizes[chunkSizeIndex] - 1;
             }
         }
     }
 
-    public void DrawMapInEditor()
-    {
+    // Main thread
+    public void DrawMapInEditor() {
+        // Update textureData
         textureData.ApplyToMaterial(terrainMaterial);
+        textureData.UpdateMeshHeights(terrainMaterial, terrainData.minHeight, terrainData.maxHeight);
+
         MapData mapData = GenerateMapData(Vector2.zero);
 
         // Draw texture to the display
