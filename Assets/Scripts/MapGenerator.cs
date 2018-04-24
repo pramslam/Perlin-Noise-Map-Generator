@@ -25,6 +25,10 @@ public class MapGenerator : MonoBehaviour {
     Queue<MapThreadInfo<MapData>> mapDataThreadInfoQueue = new Queue<MapThreadInfo<MapData>>();
     Queue<MapThreadInfo<MeshData>> meshDataThreadInfoQueue = new Queue<MapThreadInfo<MeshData>>();
 
+    void Awake() {
+        textureData.ApplyToMaterial(terrainMaterial);
+    }
+
     void OnValuesUpdated() {
         if (!Application.isPlaying) {
             DrawMapInEditor();
@@ -48,6 +52,7 @@ public class MapGenerator : MonoBehaviour {
 
     public void DrawMapInEditor()
     {
+        textureData.ApplyToMaterial(terrainMaterial);
         MapData mapData = GenerateMapData(Vector2.zero);
 
         // Draw texture to the display
@@ -137,8 +142,6 @@ public class MapGenerator : MonoBehaviour {
                 }
             }
         }
-        textureData.ApplyToMaterial(terrainMaterial);
-        textureData.UpdateMeshHeights(terrainMaterial, terrainData.minHeight, terrainData.maxHeight);
 
         return new MapData(noiseMap);
     }
